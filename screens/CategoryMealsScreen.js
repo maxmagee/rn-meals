@@ -9,16 +9,22 @@ const CategoryMealsScreen = (props) => {
     navigation.navigate({ routeName: "MealDetail" });
   };
 
+  const goBackHandler = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.screen}>
       <Text>Category Meals Screen</Text>
       <Button title="Go to Meals Detail" onPress={pressHandler} />
+      <Button title="Go Back" onPress={goBackHandler} />
     </View>
   );
 };
 
 CategoryMealsScreen.propTypes = {
   navigation: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };

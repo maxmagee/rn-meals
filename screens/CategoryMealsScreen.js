@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 import dummyData from "../data/dummy-data";
+import colors from "../constants/colors";
 
 const CategoryMealsScreen = (props) => {
   const { navigation } = props;
@@ -20,11 +21,24 @@ const CategoryMealsScreen = (props) => {
   return (
     <View style={styles.screen}>
       <Text>Category Meals Screen</Text>
-      <Text>{selectedCategory.title}</Text>
       <Button title="Go to Meals Detail" onPress={pressHandler} />
       <Button title="Go Back" onPress={goBackHandler} />
     </View>
   );
+};
+
+// navigationOptions can be an object for static data, or function for dynamic options
+CategoryMealsScreen.navigationOptions = (navigationData) => {
+  const categoryId = navigationData.navigation.getParam("categoryId");
+  const selectedCategory = dummyData.categories.find((category) => category.id === categoryId);
+
+  return {
+    headerStyle: {
+      backgroundColor: colors.primary,
+    },
+    headerTintColor: "white",
+    headerTitle: selectedCategory.title,
+  };
 };
 
 CategoryMealsScreen.propTypes = {

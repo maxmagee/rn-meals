@@ -1,31 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 
-const CategoriesScreen = (props) => {
-  const { navigation } = props;
+import dummyData from "../data/dummy-data";
 
-  const pressHandler = () => {
-    navigation.navigate({ routeName: "CategoryMeals" });
-  };
-
+const renderGridItem = (itemData) => {
   return (
-    <View style={styles.screen}>
-      <Text>Categories Screen</Text>
-      <Button title="Go To Meals!" onPress={pressHandler} />
+    <View style={styles.gridItem}>
+      <Text>{itemData.item.title}</Text>
     </View>
   );
 };
 
-CategoriesScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
+const CategoriesScreen = (props) => {
+  return <FlatList data={dummyData.categories} renderItem={renderGridItem} numColumns={2} />;
 };
+
+CategoriesScreen.propTypes = {};
 
 CategoriesScreen.defaultProps = {};
 
 const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    height: 150,
+    margin: 15,
+  },
   screen: {
     alignItems: "center",
     flex: 1,

@@ -8,13 +8,18 @@ import dummyData from "../data/dummy-data";
 const CategoriesScreen = (props) => {
   const { navigation } = props;
 
-  const itemPressHandler = () => {
-    navigation.navigate({ routeName: "CategoryMeals" });
+  const itemPressHandler = (itemData) => {
+    navigation.navigate({
+      params: {
+        categoryId: itemData.item.id,
+      },
+      routeName: "CategoryMeals",
+    });
   };
 
   const renderGridItem = (itemData) => {
     return (
-      <TouchableOpacity style={styles.gridItem} onPress={itemPressHandler}>
+      <TouchableOpacity style={styles.gridItem} onPress={itemPressHandler.bind(null, itemData)}>
         <View>
           <Text>{itemData.item.title}</Text>
         </View>

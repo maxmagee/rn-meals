@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 import dummyData from "../data/dummy-data";
-import colors from "../constants/colors";
 
 const CategoryMealsScreen = (props) => {
   const { navigation } = props;
@@ -33,10 +32,6 @@ CategoryMealsScreen.navigationOptions = (navigationData) => {
   const selectedCategory = dummyData.categories.find((category) => category.id === categoryId);
 
   return {
-    headerStyle: {
-      backgroundColor: colors.primary,
-    },
-    headerTintColor: "white",
     headerTitle: selectedCategory.title,
   };
 };

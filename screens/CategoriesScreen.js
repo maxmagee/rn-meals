@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+
+import CategoryGridTile from "../components/CategoryGridTile";
 
 import dummyData from "../data/dummy-data";
 
@@ -18,11 +20,11 @@ const CategoriesScreen = (props) => {
 
   const renderGridItem = (itemData) => {
     return (
-      <TouchableOpacity style={styles.gridItem} onPress={itemPressHandler.bind(null, itemData)}>
-        <View>
-          <Text>{itemData.item.title}</Text>
-        </View>
-      </TouchableOpacity>
+      <CategoryGridTile
+        color={itemData.item.color}
+        onPress={itemPressHandler.bind(null, itemData)}
+        title={itemData.item.title}
+      />
     );
   };
 
@@ -42,11 +44,6 @@ CategoriesScreen.propTypes = {
 CategoriesScreen.defaultProps = {};
 
 const styles = StyleSheet.create({
-  gridItem: {
-    flex: 1,
-    height: 150,
-    margin: 15,
-  },
   screen: {
     alignItems: "center",
     flex: 1,

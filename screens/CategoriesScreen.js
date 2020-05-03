@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 
 import CategoryGridTile from "../components/CategoryGridTile";
 
-import dummyData from "../data/dummy-data";
+import { categories } from "../data/dummy-data";
 
 const CategoriesScreen = (props) => {
   const { navigation } = props;
@@ -28,7 +28,7 @@ const CategoriesScreen = (props) => {
     );
   };
 
-  return <FlatList data={dummyData.categories} renderItem={renderGridItem} numColumns={2} />;
+  return <FlatList data={categories} renderItem={renderGridItem} numColumns={2} />;
 };
 
 CategoriesScreen.navigationOptions = {
@@ -42,13 +42,5 @@ CategoriesScreen.propTypes = {
 };
 
 CategoriesScreen.defaultProps = {};
-
-const styles = StyleSheet.create({
-  screen: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-});
 
 export default CategoriesScreen;

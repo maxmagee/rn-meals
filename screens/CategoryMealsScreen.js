@@ -1,27 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
-import dummyData from "../data/dummy-data";
+import MealItem from "../components/MealItem";
+
+import { categories, meals } from "../data/dummy-data";
 
 const CategoryMealsScreen = (props) => {
   const { navigation } = props;
   const categoryId = navigation.getParam("categoryId");
-  const selectedCategory = dummyData.categories.find((category) => category.id === categoryId);
+  const displayedMeals = meals.filter((meal) => meal.categoryIds.indexOf(categoryId) >= 0);
 
-  const pressHandler = () => {
+  const mealItemPressHandler = () => {
     navigation.navigate({ routeName: "MealDetail" });
   };
 
-  const goBackHandler = () => {
-    navigation.goBack();
+  const renderMealItem = (itemData) => {
+    return (
+      <MealItem
+        affordability={itemData.item.affordability}
+        complexity={itemData.item.complexity}
+        duration={itemData.item.duration}
+        imageUrl={itemData.item.imageUrl}
+        onPress={mealItemPressHandler}
+        title={itemData.item.title}
+      />
+    );
   };
 
   return (
     <View style={styles.screen}>
-      <Text>Category Meals Screen</Text>
-      <Button title="Go to Meals Detail" onPress={pressHandler} />
-      <Button title="Go Back" onPress={goBackHandler} />
+      <FlatList
+        data={displayedMeals}
+        keyExtractor={(item) => item.id}
+        renderItem={renderMealItem}
+        style={{ width: "100%" }}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
@@ -29,7 +44,7 @@ const CategoryMealsScreen = (props) => {
 // navigationOptions can be an object for static data, or function for dynamic options
 CategoryMealsScreen.navigationOptions = (navigationData) => {
   const categoryId = navigationData.navigation.getParam("categoryId");
-  const selectedCategory = dummyData.categories.find((category) => category.id === categoryId);
+  const selectedCategory = categories.find((category) => category.id === categoryId);
 
   return {
     headerTitle: selectedCategory.title,
@@ -50,6 +65,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     justifyContent: "center",
+    padding: 20,
   },
 });
 

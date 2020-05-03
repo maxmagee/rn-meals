@@ -18,9 +18,14 @@ const MealItem = (props) => {
           </ImageBackground>
         </View>
         <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
-          <Text>{duration}m</Text>
-          <Text>{complexity.toUpperCase()}</Text>
-          <Text>{affordability.toUpperCase()}</Text>
+          <View style={styles.mealDetailSection}>
+            <Text>
+              {complexity.toUpperCase()} - {duration}m
+            </Text>
+          </View>
+          <View style={styles.mealDetailSection}>
+            <Text style={{ textAlign: "right" }}>{affordability.toUpperCase()}</Text>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -49,6 +54,9 @@ const styles = StyleSheet.create({
     height: "15%",
     justifyContent: "space-between",
     paddingHorizontal: 10,
+  },
+  mealDetailSection: {
+    width: "50%",
   },
   mealHeader: {
     height: "85%",

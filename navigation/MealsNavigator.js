@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import CategoriesScreen from "../screens/CategoriesScreen";
@@ -18,6 +19,11 @@ const MealsNavigator = createStackNavigator(
         backgroundColor: colors.primary,
       },
       headerTintColor: "white",
+      headerTitleContainerStyle: {
+        // Work-around for truncation bug
+        alignItems: Platform.OS === "ios" ? "center" : "flex-start",
+        width: Platform.OS === "ios" ? "60%" : "75%",
+      },
     },
   }
 );

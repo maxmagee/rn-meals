@@ -11,8 +11,8 @@ const CategoryMealsScreen = (props) => {
   const categoryId = navigation.getParam("categoryId");
   const displayedMeals = meals.filter((meal) => meal.categoryIds.indexOf(categoryId) >= 0);
 
-  const mealItemPressHandler = () => {
-    navigation.navigate({ routeName: "MealDetail" });
+  const mealItemPressHandler = (itemData) => {
+    navigation.navigate({ params: { mealId: itemData.item.id }, routeName: "MealDetail" });
   };
 
   const renderMealItem = (itemData) => {
@@ -22,7 +22,7 @@ const CategoryMealsScreen = (props) => {
         complexity={itemData.item.complexity}
         duration={itemData.item.duration}
         imageUrl={itemData.item.imageUrl}
-        onPress={mealItemPressHandler}
+        onPress={mealItemPressHandler.bind(null, itemData)}
         title={itemData.item.title}
       />
     );

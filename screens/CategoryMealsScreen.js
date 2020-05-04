@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FlatList, StyleSheet, View } from "react-native";
 
-import MealItem from "../components/MealItem";
+import MealList from "../components/MealList";
 
 import { categories, meals } from "../data/dummy-data";
 
@@ -15,30 +14,7 @@ const CategoryMealsScreen = (props) => {
     navigation.navigate({ params: { mealId: itemData.item.id }, routeName: "MealDetail" });
   };
 
-  const renderMealItem = (itemData) => {
-    return (
-      <MealItem
-        affordability={itemData.item.affordability}
-        complexity={itemData.item.complexity}
-        duration={itemData.item.duration}
-        imageUrl={itemData.item.imageUrl}
-        onPress={mealItemPressHandler.bind(null, itemData)}
-        title={itemData.item.title}
-      />
-    );
-  };
-
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMealItem}
-        style={{ width: "100%" }}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
-  );
+  return <MealList meals={displayedMeals} onMealItemPress={mealItemPressHandler} />;
 };
 
 // navigationOptions can be an object for static data, or function for dynamic options
@@ -54,19 +30,9 @@ CategoryMealsScreen.navigationOptions = (navigationData) => {
 CategoryMealsScreen.propTypes = {
   navigation: PropTypes.shape({
     getParam: PropTypes.func.isRequired,
-    goBack: PropTypes.func.isRequired,
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
 CategoryMealsScreen.defaultProps = {};
-
-const styles = StyleSheet.create({
-  screen: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
-  },
-});
 
 export default CategoryMealsScreen;

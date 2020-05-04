@@ -1,24 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View } from "react-native";
+
+import MealList from "../components/MealList";
+
+import { meals } from "../data/dummy-data";
 
 const FavoritesScreen = (props) => {
-  return (
-    <View style={styles.screen}>
-      <Text>Favorites Screen</Text>
-    </View>
-  );
+  const { navigation } = props;
+  const displayedMeals = meals.filter((meal) => meal.id === "m1" || meal.id === "m2");
+
+  const mealItemPressHandler = (itemData) => {
+    navigation.navigate({ params: { mealId: itemData.item.id }, routeName: "MealDetail" });
+  };
+
+  return <MealList meals={displayedMeals} onMealItemPress={mealItemPressHandler} />;
 };
 
-FavoritesScreen.propTypes = {};
+FavoritesScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 FavoritesScreen.defaultProps = {};
 
-const styles = StyleSheet.create({
-  screen: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-});
+FavoritesScreen.navigationOptions = {
+  headerTitle: "Your Favorites",
+};
 
 export default FavoritesScreen;

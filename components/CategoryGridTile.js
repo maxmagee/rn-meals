@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 150,
     margin: 15,
-    overflow: "hidden",
+    // Ripple effect fix with shadow
+    overflow: Platform.OS === "android" && Platform.Version >= 21 ? "hidden" : "visible",
   },
   title: {
     fontFamily: "open-sans-bold",

@@ -47,7 +47,6 @@ MealDetailScreen.navigationOptions = (navigationData) => {
         </HeaderButtons>
       );
     },
-
     headerTitle: selectedMeal.title,
   };
 };

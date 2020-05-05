@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { DrawerActions } from "react-navigation-drawer";
 
 import MealList from "../components/MealList";
+import CustomHeaderButton from "../components/CustomHeaderButton";
 
 import { meals } from "../data/dummy-data";
 
@@ -23,8 +26,21 @@ FavoritesScreen.propTypes = {
 };
 FavoritesScreen.defaultProps = {};
 
-FavoritesScreen.navigationOptions = {
-  headerTitle: "Your Favorites",
+FavoritesScreen.navigationOptions = (navigationData) => {
+  const menuPressHandler = () => {
+    navigationData.navigation.dispatch(DrawerActions.openDrawer());
+  };
+
+  return {
+    headerLeft: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item iconName="ios-menu" onPress={menuPressHandler} title="Menu" />
+        </HeaderButtons>
+      );
+    },
+    headerTitle: "Your Favorites",
+  };
 };
 
 export default FavoritesScreen;

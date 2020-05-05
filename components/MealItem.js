@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     height: 200,
     marginBottom: 15,
     overflow: "hidden",
-
     width: "100%",
   },
   mealRow: {

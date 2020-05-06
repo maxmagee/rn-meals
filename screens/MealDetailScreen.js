@@ -13,10 +13,10 @@ const MealDetailScreen = (props) => {
   const { navigation } = props;
   const meals = useSelector((state) => state.meals.meals);
   const selectedMeal = meals.find((meal) => meal.id === navigation.getParam("mealId"));
+  const currentMealIsFavorite = useSelector((state) =>
+    state.meals.favoriteMeals.some((meal) => meal.id === selectedMeal.id)
+  );
 
-  // While you could do it this way, the title appears after a slight delay
-  // Instead, we'll pass the mealTitle directly from the previous screen
-  //
   const dispatch = useDispatch();
 
   const toggleFavoriteHandler = useCallback(() => {
@@ -26,6 +26,10 @@ const MealDetailScreen = (props) => {
   useEffect(() => {
     navigation.setParams({ toggleFavorite: toggleFavoriteHandler });
   }, [toggleFavoriteHandler]);
+
+  useEffect(() => {
+    navigation.setParams({ isFavorite: currentMealIsFavorite });
+  }, [currentMealIsFavorite]);
 
   const renderIngredientList = () => {
     return selectedMeal.ingredients.map((ingredient) => {
@@ -87,12 +91,14 @@ MealDetailScreen.defaultProps = {};
 MealDetailScreen.navigationOptions = (navigationData) => {
   const mealTitle = navigationData.navigation.getParam("mealTitle");
   const toggleFavoriteHandler = navigationData.navigation.getParam("toggleFavorite");
+  const isFavorite = navigationData.navigation.getParam("isFavorite");
+  const iconName = isFavorite ? "ios-star" : "ios-star-outline";
 
   return {
     headerRight: () => {
       return (
         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          <Item iconName="ios-star-outline" onPress={toggleFavoriteHandler} title="Favorite" />
+          <Item iconName={iconName} onPress={toggleFavoriteHandler} title="Favorite" />
         </HeaderButtons>
       );
     },

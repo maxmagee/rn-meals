@@ -16,6 +16,7 @@ const FavoritesScreen = (props) => {
   const mealItemPressHandler = (itemData) => {
     navigation.navigate({
       params: {
+        isFavorite: favoriteMeals.some((meal) => meal.id === itemData.item.id),
         mealId: itemData.item.id,
         mealTitle: itemData.item.title,
       },
@@ -23,7 +24,7 @@ const FavoritesScreen = (props) => {
     });
   };
 
-  if (favoriteMeals.length === 0) {
+  if (!favoriteMeals || favoriteMeals.length === 0) {
     return (
       <View style={styles.screen}>
         <DefaultText>No Current Favorite Meals</DefaultText>

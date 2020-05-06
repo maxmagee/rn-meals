@@ -10,12 +10,13 @@ const CategoryMealsScreen = (props) => {
   const { navigation } = props;
   const categoryId = navigation.getParam("categoryId");
   const filteredMeals = useSelector((state) => state.meals.filteredMeals);
-
   const displayedMeals = filteredMeals.filter((meal) => meal.categoryIds.indexOf(categoryId) >= 0);
+  const favoriteMeals = useSelector((state) => state.meals.favoriteMeals);
 
   const mealItemPressHandler = (itemData) => {
     navigation.navigate({
       params: {
+        isFavorite: favoriteMeals.some((meal) => meal.id === itemData.item.id),
         mealId: itemData.item.id,
         mealTitle: itemData.item.title,
       },

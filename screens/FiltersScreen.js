@@ -2,19 +2,25 @@ import React, { useState } from "react";
 import { DrawerActions } from "react-navigation-drawer";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { StyleSheet, View } from "react-native";
+import { useDispatch } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import CustomSwitch from "../components/CustomSwitch";
 import DefaultText from "../components/DefaultText";
 
+import { setFilters } from "../store/actions/meals";
+
 const FiltersScreen = () => {
   const [selectedState, setSelectedState] = useState({});
+  const dispatch = useDispatch();
 
   const switchChangeHandler = (newValue, key) => {
     setSelectedState((prevSelectedState) => {
-      const newState = {};
+      const newState = { ...prevSelectedState };
       newState[key] = newValue;
-      return { ...prevSelectedState, ...newState };
+      dispatch(setFilters(newState));
+      return newState;
+      // return { ...prevSelectedState, ...newState };
     });
   };
 
@@ -23,26 +29,26 @@ const FiltersScreen = () => {
       <DefaultText style={styles.title}>Available Filters</DefaultText>
       <CustomSwitch
         labelTitle="Gluten - Free"
-        switchId="gluten"
-        value={selectedState.gluten || false}
+        switchId="isGlutenFree"
+        value={selectedState.isGlutenFree || false}
         valueChangeHandler={switchChangeHandler}
       />
       <CustomSwitch
         labelTitle="Lactose - Free"
-        switchId="lactose"
-        value={selectedState.lactose || false}
+        switchId="isLactoseFree"
+        value={selectedState.isLactoseFree || false}
         valueChangeHandler={switchChangeHandler}
       />
       <CustomSwitch
         labelTitle="Vegan"
-        switchId="vegan"
-        value={selectedState.vegan || false}
+        switchId="isVegan"
+        value={selectedState.isVegan || false}
         valueChangeHandler={switchChangeHandler}
       />
       <CustomSwitch
         labelTitle="Vegetarian"
-        switchId="vegetarian"
-        value={selectedState.vegetarian || false}
+        switchId="isVegetarian"
+        value={selectedState.isVegetarian || false}
         valueChangeHandler={switchChangeHandler}
       />
     </View>

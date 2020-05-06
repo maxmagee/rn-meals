@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
 
 import MealList from "../components/MealList";
 import CustomHeaderButton from "../components/CustomHeaderButton";
+import DefaultText from "../components/DefaultText";
 
 const FavoritesScreen = (props) => {
   const { navigation } = props;
@@ -20,6 +22,14 @@ const FavoritesScreen = (props) => {
       routeName: "MealDetail",
     });
   };
+
+  if (favoriteMeals.length === 0) {
+    return (
+      <View style={styles.screen}>
+        <DefaultText>No Current Favorite Meals</DefaultText>
+      </View>
+    );
+  }
 
   return <MealList meals={favoriteMeals} onMealItemPress={mealItemPressHandler} />;
 };
@@ -47,5 +57,13 @@ FavoritesScreen.navigationOptions = (navigationData) => {
     headerTitle: "Your Favorites",
   };
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+});
 
 export default FavoritesScreen;

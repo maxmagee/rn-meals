@@ -1,17 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 import MealList from "../components/MealList";
 
-import { categories, meals } from "../data/dummy-data";
+import { categories } from "../data/dummy-data";
 
 const CategoryMealsScreen = (props) => {
   const { navigation } = props;
   const categoryId = navigation.getParam("categoryId");
-  const displayedMeals = meals.filter((meal) => meal.categoryIds.indexOf(categoryId) >= 0);
+  const filteredMeals = useSelector((state) => state.meals.filteredMeals);
+
+  const displayedMeals = filteredMeals.filter((meal) => meal.categoryIds.indexOf(categoryId) >= 0);
 
   const mealItemPressHandler = (itemData) => {
-    navigation.navigate({ params: { mealId: itemData.item.id }, routeName: "MealDetail" });
+    navigation.navigate({
+      params: {
+        mealId: itemData.item.id,
+        mealTitle: itemData.item.title,
+      },
+      routeName: "MealDetail",
+    });
   };
 
   return <MealList meals={displayedMeals} onMealItemPress={mealItemPressHandler} />;

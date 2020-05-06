@@ -33,7 +33,7 @@ const mealsReducer = (state = initialState, action) => {
         );
       };
 
-      const newFilteredMeals = [...state.meals.filter(matchesAllFilters)];
+      const newFilteredMeals = state.meals.filter(matchesAllFilters);
 
       return { ...state, filteredMeals: newFilteredMeals };
     }

@@ -20,7 +20,6 @@ const FiltersScreen = () => {
       newState[key] = newValue;
       dispatch(setFilters(newState));
       return newState;
-      // return { ...prevSelectedState, ...newState };
     });
   };
 
